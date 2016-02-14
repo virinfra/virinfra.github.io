@@ -6,50 +6,23 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <title>Hexo+GitHub+DNSPod搭建个人博客 | Virinfra&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一、DNS
-NameServer设定在域名服务商页面把NameServer设为DNSPod的NS：f1g1ns1.dnspod.net 和 f1g1ns2.dnspod.net
-
-DNSPod设定
-
-
-二、GitHub
-安装GIT
-1brew install git
-
-生成SSH Key
-123456$ssh-keygen -t rsa -C &quot;姓名全拼@haodf.com&quot;  $git conf">
+  <meta name="description" content="一、DNSNameServer设定在域名服务商页面把NameServer设为DNSPod的NS：f1g1ns1.dnspod.net 和 f1g1ns2.dnspod.net
+DNSPod设定二、GitHub安装GIT1brew install git
+生成SSH Key123456$ssh-keygen -t rsa -C &quot;姓名全拼@haodf.com&quot;  $git config --glob">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo+GitHub+DNSPod搭建个人博客">
 <meta property="og:url" content="http://virinfra.com/2016/02/14/hexo-github-dnspod/index.html">
 <meta property="og:site_name" content="Virinfra's Blog">
-<meta property="og:description" content="一、DNS
-NameServer设定在域名服务商页面把NameServer设为DNSPod的NS：f1g1ns1.dnspod.net 和 f1g1ns2.dnspod.net
-
-DNSPod设定
-
-
-二、GitHub
-安装GIT
-1brew install git
-
-生成SSH Key
-123456$ssh-keygen -t rsa -C &quot;姓名全拼@haodf.com&quot;  $git conf">
+<meta property="og:description" content="一、DNSNameServer设定在域名服务商页面把NameServer设为DNSPod的NS：f1g1ns1.dnspod.net 和 f1g1ns2.dnspod.net
+DNSPod设定二、GitHub安装GIT1brew install git
+生成SSH Key123456$ssh-keygen -t rsa -C &quot;姓名全拼@haodf.com&quot;  $git config --glob">
 <meta property="og:image" content="http://virinfra.com/path/to/img.jpg">
-<meta property="og:updated_time" content="2016-02-14T13:17:39.000Z">
+<meta property="og:updated_time" content="2016-02-14T13:23:59.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo+GitHub+DNSPod搭建个人博客">
-<meta name="twitter:description" content="一、DNS
-NameServer设定在域名服务商页面把NameServer设为DNSPod的NS：f1g1ns1.dnspod.net 和 f1g1ns2.dnspod.net
-
-DNSPod设定
-
-
-二、GitHub
-安装GIT
-1brew install git
-
-生成SSH Key
-123456$ssh-keygen -t rsa -C &quot;姓名全拼@haodf.com&quot;  $git conf">
+<meta name="twitter:description" content="一、DNSNameServer设定在域名服务商页面把NameServer设为DNSPod的NS：f1g1ns1.dnspod.net 和 f1g1ns2.dnspod.net
+DNSPod设定二、GitHub安装GIT1brew install git
+生成SSH Key123456$ssh-keygen -t rsa -C &quot;姓名全拼@haodf.com&quot;  $git config --glob">
   
     <link rel="alternative" href="/atom.xml" title="Virinfra&#39;s Blog" type="application/atom+xml">
   
@@ -268,53 +241,28 @@ DNSPod设定
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="u4E00_u3001DNS"><a href="#u4E00_u3001DNS" class="headerlink" title="一、DNS"></a>一、DNS</h2><ul>
-<li><p>NameServer设定<br>在域名服务商页面把NameServer设为DNSPod的NS：f1g1ns1.dnspod.net 和 f1g1ns2.dnspod.net</p>
-</li>
-<li><p>DNSPod设定</p>
-</li>
-</ul>
-<h2 id="u4E8C_u3001GitHub"><a href="#u4E8C_u3001GitHub" class="headerlink" title="二、GitHub"></a>二、GitHub</h2><ul>
-<li><p>安装GIT</p>
-<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">brew </span>install git</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>生成SSH Key</p>
-<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ssh-keygen</span> -t rsa -C <span class="string">"姓名全拼@haodf.com"</span>  </span><br><span class="line"><span class="variable">$git</span> config --global user.name <span class="string">"姓名全拼"</span>  </span><br><span class="line"><span class="variable">$git</span> config --global user.email <span class="string">"姓名全拼@haodf.com"</span>  </span><br><span class="line"></span><br><span class="line"><span class="variable">$cd</span> ~/.ssh/  </span><br><span class="line"><span class="variable">$cat</span> id_rsa.pub 【注：ssh-keygen 命令默认生成 id_rsa.pub】</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>生成GitHub Pages</p>
-</li>
-</ul>
-<h2 id="u4E09_u3001Hexo"><a href="#u4E09_u3001Hexo" class="headerlink" title="三、Hexo"></a>三、Hexo</h2><ul>
-<li><p>安装NodeJS</p>
-<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install <span class="keyword">node</span><span class="identifier"></span><span class="title"></span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>安装Hexo</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd hexo的安装文件夹</span><br><span class="line">npm <span class="operator"><span class="keyword">install</span> hexo -<span class="keyword">g</span></span><br><span class="line">hexo init</span><br><span class="line">npm <span class="keyword">install</span></span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Hexo设定、更新</p>
-</li>
-</ul>
-<p>修改Hexo根目录下的_config.yml文件<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">deploy</span>:</span><br><span class="line">- <span class="attribute">type</span>: git</span><br><span class="line">  <span class="attribute">repo</span>: git<span class="variable">@github</span>.<span class="attribute">com</span>:xxxx/xxxx.github.io.git</span><br><span class="line">  <span class="attribute">branch</span>: master</span><br></pre></td></tr></table></figure></p>
-<p>安装hexo-deployer-git<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="operator"><span class="keyword">install</span> hexo-deployer-git <span class="comment">--save</span></span></span><br></pre></td></tr></table></figure></p>
-<p>更新hexo到最新版<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="operator"><span class="keyword">update</span> hexo -<span class="keyword">g</span></span></span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>Hexo命令<br>建立新文章 <figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">hexo</span> n <span class="string">"新文章名"</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
+        <h2 id="u4E00_u3001DNS"><a href="#u4E00_u3001DNS" class="headerlink" title="一、DNS"></a>一、DNS</h2><h3 id="NameServer_u8BBE_u5B9A"><a href="#NameServer_u8BBE_u5B9A" class="headerlink" title="NameServer设定"></a>NameServer设定</h3><p>在域名服务商页面把NameServer设为DNSPod的NS：f1g1ns1.dnspod.net 和 f1g1ns2.dnspod.net</p>
+<h3 id="DNSPod_u8BBE_u5B9A"><a href="#DNSPod_u8BBE_u5B9A" class="headerlink" title="DNSPod设定"></a>DNSPod设定</h3><h2 id="u4E8C_u3001GitHub"><a href="#u4E8C_u3001GitHub" class="headerlink" title="二、GitHub"></a>二、GitHub</h2><h3 id="u5B89_u88C5GIT"><a href="#u5B89_u88C5GIT" class="headerlink" title="安装GIT"></a>安装GIT</h3><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">brew </span>install git</span><br></pre></td></tr></table></figure>
+<h3 id="u751F_u6210SSH_Key"><a href="#u751F_u6210SSH_Key" class="headerlink" title="生成SSH Key"></a>生成SSH Key</h3><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ssh-keygen</span> -t rsa -C <span class="string">"姓名全拼@haodf.com"</span>  </span><br><span class="line"><span class="variable">$git</span> config --global user.name <span class="string">"姓名全拼"</span>  </span><br><span class="line"><span class="variable">$git</span> config --global user.email <span class="string">"姓名全拼@haodf.com"</span>  </span><br><span class="line"></span><br><span class="line"><span class="variable">$cd</span> ~/.ssh/  </span><br><span class="line"><span class="variable">$cat</span> id_rsa.pub 【注：ssh-keygen 命令默认生成 id_rsa.pub】</span><br></pre></td></tr></table></figure>
+<h3 id="u751F_u6210GitHub_Pages"><a href="#u751F_u6210GitHub_Pages" class="headerlink" title="生成GitHub Pages"></a>生成GitHub Pages</h3><h2 id="u4E09_u3001Hexo"><a href="#u4E09_u3001Hexo" class="headerlink" title="三、Hexo"></a>三、Hexo</h2><h3 id="u5B89_u88C5NodeJS"><a href="#u5B89_u88C5NodeJS" class="headerlink" title="安装NodeJS"></a>安装NodeJS</h3><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install <span class="keyword">node</span><span class="identifier"></span><span class="title"></span></span><br></pre></td></tr></table></figure>
+<h3 id="u5B89_u88C5Hexo"><a href="#u5B89_u88C5Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd hexo的安装文件夹</span><br><span class="line">npm <span class="operator"><span class="keyword">install</span> hexo -<span class="keyword">g</span></span><br><span class="line">hexo init</span><br><span class="line">npm <span class="keyword">install</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="Hexo_u8BBE_u5B9A_u3001_u66F4_u65B0"><a href="#Hexo_u8BBE_u5B9A_u3001_u66F4_u65B0" class="headerlink" title="Hexo设定、更新"></a>Hexo设定、更新</h3><p>修改Hexo根目录下的_config.yml文件</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">deploy</span>:</span><br><span class="line">- <span class="attribute">type</span>: git</span><br><span class="line">  <span class="attribute">repo</span>: git<span class="variable">@github</span>.<span class="attribute">com</span>:xxxx/xxxx.github.io.git</span><br><span class="line">  <span class="attribute">branch</span>: master</span><br></pre></td></tr></table></figure>
+<p>安装hexo-deployer-git</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="operator"><span class="keyword">install</span> hexo-deployer-git <span class="comment">--save</span></span></span><br></pre></td></tr></table></figure>
+<p>更新hexo到最新版</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="operator"><span class="keyword">update</span> hexo -<span class="keyword">g</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="Hexo_u547D_u4EE4"><a href="#Hexo_u547D_u4EE4" class="headerlink" title="Hexo命令"></a>Hexo命令</h3><p>建立新文章<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">hexo</span> n <span class="string">"新文章名"</span></span><br></pre></td></tr></table></figure></p>
 <p>预览文章<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">hexo</span> s</span><br></pre></td></tr></table></figure></p>
 <p>生成网页<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">hexo</span> g</span><br></pre></td></tr></table></figure></p>
 <p>发布文章<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">hexo</span> d</span><br></pre></td></tr></table></figure></p>
 <p>生成网页并发布文章<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo <span class="keyword">d</span> -<span class="keyword">g</span></span><br></pre></td></tr></table></figure></p>
 <h2 id="u56DB_u3001_u4E3B_u9898"><a href="#u56DB_u3001_u4E3B_u9898" class="headerlink" title="四、主题"></a>四、主题</h2><h2 id="u4E94_u3001Markdown"><a href="#u4E94_u3001Markdown" class="headerlink" title="五、Markdown"></a>五、Markdown</h2><p>Markdown写作APP推荐用Sublime Text 3</p>
-<ul>
-<li>安装Package Control<br>使用快捷键<figure class="highlight"><figcaption><span>+ ```打开Sublime控制台</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#22312;&#25511;&#21046;&#21488;&#30340;&#21629;&#20196;&#34892;&#36755;&#20837;&#26694;&#20013;&#31896;&#36148;&#19979;&#38754;&#20195;&#30721;&#21518;&#65292;&#22238;&#36710;&#23436;&#25104;Package Control&#23433;&#35013;</span><br></pre></td></tr></table></figure></li>
-</ul>
-<p>import urllib.request,os,hashlib; h = ‘eb2297e1a458f27d836c04bb0cbaf282’ + ‘d0e7a3098092775ccb37ca9d6b2e4b7d’; pf = ‘Package Control.sublime-package’; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( ‘<a href="http://packagecontrol.io/" target="_blank" rel="external">http://packagecontrol.io/</a>‘ + pf.replace(‘ ‘, ‘%20’)).read(); dh = hashlib.sha256(by).hexdigest(); print(‘Error validating download (got %s instead of %s), please try manual install’ % (dh, h)) if dh != h else open(os.path.join( ipp, pf), ‘wb’ ).write(by)<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 安装<span class="keyword">Sublime </span>Text的<span class="keyword">MarkdownEditing插件</span><br><span class="line"></span><span class="keyword">MarkdownEditing是Markdown写作者必备的插件，它可以不仅可以高亮显示Markdown语法还支持很多编程语言的语法高亮显示。</span><br><span class="line"></span>使用快捷键‘command + shift + p’进入到<span class="keyword">Sublime命令面板，输入“Install </span>Package”。</span><br><span class="line">在列表中输入“<span class="keyword">markdown </span>ed”关键字，选择“<span class="keyword">MarkdownEditing”回车，重启Sublime </span>Text。</span><br><span class="line"></span><br><span class="line"><span class="label">command</span> + option + k 插入链接</span><br><span class="line"><span class="label">command</span> + shift + k 插入图片</span><br><span class="line"></span><br><span class="line"><span class="keyword">MarkdownEditing中的code </span>snippet：</span><br><span class="line">输入“mdi + tab”会自动插入下面的图片标记</span><br></pre></td></tr></table></figure></p>
+<h3 id="u5B89_u88C5Package_Control"><a href="#u5B89_u88C5Package_Control" class="headerlink" title="安装Package Control"></a>安装Package Control</h3><p>使用快捷键<figure class="highlight"><figcaption><span>+ ```打开Sublime控制台</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#22312;&#25511;&#21046;&#21488;&#30340;&#21629;&#20196;&#34892;&#36755;&#20837;&#26694;&#20013;&#31896;&#36148;&#19979;&#38754;&#20195;&#30721;&#21518;&#65292;&#22238;&#36710;&#23436;&#25104;Package Control&#23433;&#35013;</span><br></pre></td></tr></table></figure></p>
+<p>import urllib.request,os,hashlib; h = ‘eb2297e1a458f27d836c04bb0cbaf282’ + ‘d0e7a3098092775ccb37ca9d6b2e4b7d’; pf = ‘Package Control.sublime-package’; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( ‘<a href="http://packagecontrol.io/" target="_blank" rel="external">http://packagecontrol.io/</a>‘ + pf.replace(‘ ‘, ‘%20’)).read(); dh = hashlib.sha256(by).hexdigest(); print(‘Error validating download (got %s instead of %s), please try manual install’ % (dh, h)) if dh != h else open(os.path.join( ipp, pf), ‘wb’ ).write(by)<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">### 安装MarkdownEditing插件</span></span><br><span class="line"></span><br><span class="line">MarkdownEditing是Markdown写作者必备的插件，它可以不仅可以高亮显示Markdown语法还支持很多编程语言的语法高亮显示。</span><br><span class="line">使用快捷键‘<span class="command"><span class="keyword">command</span> + <span class="title">shift</span> + <span class="title">p</span>’进入到<span class="title">Sublime</span>命令面板，输入“<span class="title">Install</span> <span class="title">Package</span>”。</span></span><br><span class="line">在列表中输入“markdown ed”关键字，选择“MarkdownEditing”回车，重启Sublime Text。</span><br><span class="line"></span><br><span class="line"><span class="command"><span class="keyword">command</span> + <span class="title">option</span> + <span class="title">k</span> 插入链接</span></span><br><span class="line"><span class="command"><span class="keyword">command</span> + <span class="title">shift</span> + <span class="title">k</span> 插入图片</span></span><br><span class="line"></span><br><span class="line">MarkdownEditing中的code snippet：</span><br><span class="line">输入“mdi + <span class="constant">tab</span>”会自动插入下面的图片标记</span><br></pre></td></tr></table></figure></p>
 <p><img src="/path/to/img.jpg" alt="Alt text" title="Optional title"><br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">输入“mdi + <span class="constant">tab</span>”会自动生成下面的链接标记</span><br></pre></td></tr></table></figure></p>
 <p><a href="link"></a><br>```</p>
-<ul>
-<li>安装OmmiMarkupPreviewer<br>OmniMarkupPreviewer用来预览markdown编辑的效果，同样支持渲染代码高亮的样式。<br>使用快捷键‘command + shift + p’进入到Sublime命令面板，输入“Install Package”。<br>在列表中输入“omnimarkup”关键字，选择“OmniMarkupPreviewer”回车，重启Sublime Text。</li>
-</ul>
+<h3 id="u5B89_u88C5OmmiMarkupPreviewer"><a href="#u5B89_u88C5OmmiMarkupPreviewer" class="headerlink" title="安装OmmiMarkupPreviewer"></a>安装OmmiMarkupPreviewer</h3><p>OmniMarkupPreviewer用来预览markdown编辑的效果，同样支持渲染代码高亮的样式。<br>使用快捷键‘command + shift + p’进入到Sublime命令面板，输入“Install Package”。<br>在列表中输入“omnimarkup”关键字，选择“OmniMarkupPreviewer”回车，重启Sublime Text。</p>
 
       
     </div>
