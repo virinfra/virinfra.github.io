@@ -65,7 +65,7 @@
 <meta property="og:site_name" content="Virinfra's Blog">
 <meta property="og:description" content="ovs-vsctlovs-vsctl 连接到 ovsdb-server 进程，查询或更新 ovs 数据库。如果更新数据库，则默认它会等待 ovs-vswitchd 根据数据库重新配置交换机后才返回。但使用 --no-wait 选项可不等待而立即返回。ovs-vsctl 可在单条调用中执行多条子命令，这实现为对数据库的原子事务操作。调用格式：
 1ovs-vsctl [全局选项]... [--] [子">
-<meta property="og:updated_time" content="2016-02-16T06:25:12.000Z">
+<meta property="og:updated_time" content="2016-02-16T06:27:36.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="openvswitch命令行工具">
 <meta name="twitter:description" content="ovs-vsctlovs-vsctl 连接到 ovsdb-server 进程，查询或更新 ovs 数据库。如果更新数据库，则默认它会等待 ovs-vswitchd 根据数据库重新配置交换机后才返回。但使用 --no-wait 选项可不等待而立即返回。ovs-vsctl 可在单条调用中执行多条子命令，这实现为对数据库的原子事务操作。调用格式：
@@ -248,16 +248,16 @@
         <h2 id="ovs-vsctl"><a href="#ovs-vsctl" class="headerlink" title="ovs-vsctl"></a>ovs-vsctl</h2><p>ovs-vsctl 连接到 ovsdb-server 进程，查询或更新 ovs 数据库。如果更新数据库，则默认它会等待 ovs-vswitchd 根据数据库重新配置交换机后才返回。但使用 <code>--no-wait</code> 选项可不等待而立即返回。<br>ovs-vsctl 可在单条调用中执行多条子命令，这实现为对数据库的原子事务操作。调用格式：</p>
 <figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="atom">ovs</span>-<span class="atom">vsctl</span> [全局选项]... [--] [子选项]... 子命令 [子参数]... [-- [子选项]... 子命令 [子参数]...]...</span><br></pre></td></tr></table></figure>
 <p>可以看出，子命令间使用 – 隔开，但首条子命令前可以省略 –，除非其带子选项。</p>
-<h3 id="u64CD_u4F5C_bridge"><a href="#u64CD_u4F5C_bridge" class="headerlink" title="操作 bridge"></a>操作 bridge</h3><ul>
+<h4 id="u64CD_u4F5C_bridge"><a href="#u64CD_u4F5C_bridge" class="headerlink" title="操作 bridge"></a>操作 bridge</h4><ul>
 <li>创建网桥：</li>
 </ul>
 <figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">(<span class="keyword">venv</span>)</span><span class="list">[<span class="keyword">root@network</span> ~]# ovs-vsctl add-br br0</span><br><span class="line"><span class="list">(<span class="keyword">venv</span>)</span><span class="list">[<span class="keyword">root@network</span> ~]# ovs-vsctl add-br br1</span></span></span><br></pre></td></tr></table></figure>
 <ul>
-<li><p>查看 ovs 数据库内容的概览：</p>
+<li>查看 ovs 数据库内容的概览：</li>
+</ul>
 <figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">(venv)[root@network ~]# ovs-vsctl show</span><br><span class="line"><span class="title">d707388c</span>-b65e-<span class="number">41</span>ae-<span class="number">9091</span>-<span class="number">3</span>aee56fd6fa6</span><br><span class="line">    <span class="type">Bridge</span> <span class="string">"br1"</span></span><br><span class="line">        <span class="type">Port</span> <span class="string">"br1"</span>  # 自动创建的internal类型的本地<span class="foreign"><span class="keyword">port</span>和interface</span></span><br><span class="line">            <span class="type">Interface</span> <span class="string">"br1"</span></span><br><span class="line">                <span class="typedef"><span class="keyword">type</span>: internal</span></span><br><span class="line">    <span class="type">Bridge</span> <span class="string">"br0"</span></span><br><span class="line">        <span class="type">Port</span> <span class="string">"br0"</span></span><br><span class="line">            <span class="type">Interface</span> <span class="string">"br0"</span></span><br><span class="line">                <span class="typedef"><span class="keyword">type</span>: internal</span></span><br><span class="line">    ovs_version: <span class="string">"2.3.1"</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>列出网桥：</p>
-</li>
+<ul>
+<li>列出网桥：</li>
 </ul>
 <figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">(<span class="keyword">venv</span>)</span><span class="list">[<span class="keyword">root@network</span> ~]# ovs-vsctl list-br</span><br><span class="line">br0</span><br><span class="line">br1</span></span><br></pre></td></tr></table></figure>
 <ul>
@@ -273,13 +273,21 @@
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(venv)[root@network ~]<span class="preprocessor"># cat /var/log/openvswitch/ovs-vswitchd.log | tail -<span class="number">1</span></span></span><br><span class="line"><span class="number">2015</span>-<span class="number">06</span>-<span class="number">10</span>T13:<span class="number">00</span>:<span class="number">08.898</span>Z|<span class="number">00020</span>|bridge|WARN|<span class="function">could not open network device <span class="title">port0</span> <span class="params">(No such device)</span></span></span><br></pre></td></tr></table></figure>
 <p>上面创建 system 类型的 port 后，ovs 试图打开对应的不存在的同名网卡设备（虚拟的或物理的）时报错。如果存在同名网卡，则不会报错：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(venv)[root@network ~]<span class="preprocessor"># ip link show dev eth2</span></span><br><span class="line"><span class="number">4</span>: eth2: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span class="number">1500</span> qdisc pfifo_fast state UP mode DEFAULT qlen <span class="number">1000</span></span><br><span class="line">    link/ether <span class="number">00</span>:<span class="number">0</span>c:<span class="number">29</span>:f9:<span class="number">3</span>a:<span class="number">14</span> brd ff:ff:ff:ff:ff:ff</span><br><span class="line">(venv)[root@network ~]<span class="preprocessor"># ovs-vsctl add-port br0 eth2</span></span><br></pre></td></tr></table></figure>
-<p>列出 port，默认是不显示本地 port 的：</p>
+<ul>
+<li>列出 port，默认是不显示本地 port 的：</li>
+</ul>
 <figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">(<span class="keyword">venv</span>)</span><span class="list">[<span class="keyword">root@network</span> ~]# ovs-vsctl list-ports br0</span><br><span class="line">eth2</span><br><span class="line">port0</span></span><br></pre></td></tr></table></figure>
-<p>删除 port：</p>
+<ul>
+<li>删除 port：</li>
+</ul>
 <figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">(<span class="keyword">venv</span>)</span><span class="list">[<span class="keyword">root@network</span> ~]# ovs-vsctl del-port eth2</span><br><span class="line"><span class="list">(<span class="keyword">venv</span>)</span><span class="list">[<span class="keyword">root@network</span> ~]# ovs-vsctl del-port port0</span><br><span class="line"><span class="list">(<span class="keyword">venv</span>)</span><span class="list">[<span class="keyword">root@network</span> ~]# ovs-vsctl show</span><br><span class="line">d707388c-b65e-41ae-9091-3aee56fd6fa6</span><br><span class="line">    Bridge <span class="string">"br0"</span></span><br><span class="line">        Port <span class="string">"br0"</span></span><br><span class="line">            Interface <span class="string">"br0"</span></span><br><span class="line">                type: internal</span><br><span class="line">    ovs_version: <span class="string">"2.3.1"</span></span></span></span></span><br></pre></td></tr></table></figure>
-<p>创建 bond：</p>
+<ul>
+<li>创建 bond：</li>
+</ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">(venv)[root@network ~]<span class="preprocessor"># ovs-vsctl add-bond br0 bond0 eth1 eth2</span></span><br><span class="line">(venv)[root@network ~]<span class="preprocessor"># ovs-vsctl show</span></span><br><span class="line">d707388c-b65e-<span class="number">41</span>ae-<span class="number">9091</span>-<span class="number">3</span>aee56fd6fa6</span><br><span class="line">    Bridge <span class="string">"br0"</span></span><br><span class="line">        Port <span class="string">"br0"</span></span><br><span class="line">            Interface <span class="string">"br0"</span></span><br><span class="line">                type: internal</span><br><span class="line">        Port <span class="string">"bond0"</span></span><br><span class="line">            Interface <span class="string">"eth2"</span>  <span class="preprocessor"># 两个网卡</span></span><br><span class="line">            Interface <span class="string">"eth1"</span></span><br><span class="line">    ovs_version: <span class="string">"2.3.1"</span></span><br></pre></td></tr></table></figure>
-<p>列出所有连接到网桥的 interface，默认是不显示本地 interface 的：</p>
+<ul>
+<li>列出所有连接到网桥的 interface，默认是不显示本地 interface 的：</li>
+</ul>
 <figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">(<span class="keyword">venv</span>)</span><span class="list">[<span class="keyword">root@network</span> ~]# ovs-vsctl list-ifaces br0</span><br><span class="line">eth1</span><br><span class="line">eth2</span></span><br></pre></td></tr></table></figure>
 <h3 id="u64CD_u4F5C_ovs__u6570_u636E_u5E93"><a href="#u64CD_u4F5C_ovs__u6570_u636E_u5E93" class="headerlink" title="操作 ovs 数据库"></a>操作 ovs 数据库</h3><p>ovs 数据库目前定义的表：</p>
 <table>
@@ -374,8 +382,7 @@
 <li>等待表 table 中记录 record 存在，且列值对符合给定。可不指定或指定多个列值对。可指定超时时间。</li>
 </ul>
 <p><code>[--timeout=n] wait-until table record [column[:key]=value]...</code></p>
-<h2 id="ovs-ofctl"><a href="#ovs-ofctl" class="headerlink" title="ovs-ofctl"></a>ovs-ofctl</h2><p>###流语法</p>
-<table>
+<h2 id="ovs-ofctl"><a href="#ovs-ofctl" class="headerlink" title="ovs-ofctl"></a>ovs-ofctl</h2><h4 id="u6D41_u8BED_u6CD5"><a href="#u6D41_u8BED_u6CD5" class="headerlink" title="流语法"></a>流语法</h4><table>
 <thead>
 <tr>
 <th>字段</th>
@@ -539,7 +546,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ovs-vsctl"><span class="nav-number">1.</span> <span class="nav-text">ovs-vsctl</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#u64CD_u4F5C_bridge"><span class="nav-number">1.1.</span> <span class="nav-text">操作 bridge</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u64CD_u4F5C_ovs__u6570_u636E_u5E93"><span class="nav-number">1.2.</span> <span class="nav-text">操作 ovs 数据库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ovs-ofctl"><span class="nav-number">2.</span> <span class="nav-text">ovs-ofctl</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ovs-vsctl"><span class="nav-number">1.</span> <span class="nav-text">ovs-vsctl</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#u64CD_u4F5C_bridge"><span class="nav-number">1.0.1.</span> <span class="nav-text">操作 bridge</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u64CD_u4F5C_ovs__u6570_u636E_u5E93"><span class="nav-number">1.1.</span> <span class="nav-text">操作 ovs 数据库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ovs-ofctl"><span class="nav-number">2.</span> <span class="nav-text">ovs-ofctl</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#u6D41_u8BED_u6CD5"><span class="nav-number">2.0.1.</span> <span class="nav-text">流语法</span></a></li></ol></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
