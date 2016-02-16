@@ -277,12 +277,11 @@
 <li><p>列出网桥：</p>
 </li>
 </ul>
-<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">(<span class="keyword">venv</span>)</span><span class="list">[<span class="keyword">root@network</span> ~]# ovs-vsctl list-br</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">br0</span><br><span class="line"></span><span class="keyword">br1</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">(<span class="keyword">venv</span>)</span><span class="list">[<span class="keyword">root@network</span> ~]# ovs-vsctl list-br</span><br><span class="line">br0</span><br><span class="line">br1</span></span><br></pre></td></tr></table></figure>
 <ul>
-<li>删除网桥：<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">(<span class="keyword">venv</span>)</span><span class="list">[<span class="keyword">root@network</span> ~]# ovs-vsctl del-br br1</span></span><br></pre></td></tr></table></figure>
-</li>
+<li>删除网桥：</li>
 </ul>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">(<span class="keyword">venv</span>)</span><span class="list">[<span class="keyword">root@network</span> ~]# ovs-vsctl del-br br1</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(venv)[root@network ~]<span class="preprocessor"># ovs-vsctl show</span></span><br><span class="line">d707388c-b65e-<span class="number">41</span>ae-<span class="number">9091</span>-<span class="number">3</span>aee56fd6fa6</span><br><span class="line">    Bridge <span class="string">"br0"</span></span><br><span class="line">        Port <span class="string">"br0"</span></span><br><span class="line">            Interface <span class="string">"br0"</span></span><br><span class="line">                type: internal</span><br><span class="line">    ovs_version: <span class="string">"2.3.1"</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>操作 port</li>
