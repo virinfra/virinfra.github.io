@@ -300,9 +300,366 @@
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">(venv)[root@network ~]<span class="preprocessor"># ovs-vsctl add-bond br0 bond0 eth1 eth2</span></span><br><span class="line">(venv)[root@network ~]<span class="preprocessor"># ovs-vsctl show</span></span><br><span class="line">d707388c-b65e-<span class="number">41</span>ae-<span class="number">9091</span>-<span class="number">3</span>aee56fd6fa6</span><br><span class="line">    Bridge <span class="string">"br0"</span></span><br><span class="line">        Port <span class="string">"br0"</span></span><br><span class="line">            Interface <span class="string">"br0"</span></span><br><span class="line">                type: internal</span><br><span class="line">        Port <span class="string">"bond0"</span></span><br><span class="line">            Interface <span class="string">"eth2"</span>  <span class="preprocessor"># 两个网卡</span></span><br><span class="line">            Interface <span class="string">"eth1"</span></span><br><span class="line">    ovs_version: <span class="string">"2.3.1"</span></span><br></pre></td></tr></table></figure>
 <p>列出所有连接到网桥的 interface，默认是不显示本地 interface 的：</p>
 <figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">(<span class="keyword">venv</span>)</span><span class="list">[<span class="keyword">root@network</span> ~]# ovs-vsctl list-ifaces br0</span><br><span class="line">eth1</span><br><span class="line">eth2</span></span><br></pre></td></tr></table></figure>
-<h3 id="u64CD_u4F5C_ovs__u6570_u636E_u5E93"><a href="#u64CD_u4F5C_ovs__u6570_u636E_u5E93" class="headerlink" title="操作 ovs 数据库"></a>操作 ovs 数据库</h3><p>ovs 数据库目前定义的表：<br>| 表名         |含义                                                 |<br>| ———— | —————————————————|<br>| Open_vSwitch | ovs-vswitchd 的全局配置。只包含一条记录，记录标识为 ‘.’ |<br>| Bridge       | 网桥配置。记录标识为表名                              |<br>| Port         | 端口配置。记录标识为端口名                            |<br>| Interface    | 网卡配置。记录标识为网卡名                            |<br>| Flow_Table   | 流表。记录标识为流表名                               |<br>| QoS          | 端口的 Quality-of-service 配置。记录标识为端口名      |<br>| Queue        | QoS 配置中一个队列的配置。记录标识为 UUID              |<br>| Mirror       | 端口镜像配置。记录标识为镜像名                        |<br>| Controller   | OpenFlow 控制器配置。记录标识为绑定的网桥名            |<br>| Manager      | OVSDB 连接配置。记录标识为目标                        |</p>
-<p>操作 ovs 数据库的子命令： - 列出表 table 中的记录 record。不指定 record，则列出表 table 中的所有记录。<br>[–if-exists] [–columns=column[,column]…] list table [record]…<br>• 查找表 table 中的其列 column 满足给定值或键值对的记录的相关列值。<br>[–columns=column[,column]…] find table [column[:key]=value]…<br>• 获取表 table 的记录 record 中的列 column（中键 key）的值。如果指定 –id=@name，则 name 可以在同一条 ovs-vsctl 调用中用于引用此值。<br>[–if-exists] [–id=@name] get table record [column[:key]]…<br>• 设置表 table 的记录 record 中的列 column<br>[–if-exists] set table record column[:key]=value…<br>• 添加表 table 的记录 record 中的列 column<br>[–if-exists] add table record column [key=]value…<br>• 清除表 table 的记录 record 中的匹配给定值（或键，或键值对）的列 column<br>[–if-exists] remove table record column [key=value | key | value]…<br>• 清除表 table 的记录 record 中的列 column 为空。<br>[–if-exists] clear table record column…<br>• 在表 table 中创建一条新记录，根据指定列值对初始化，没有指定的列赋默认值。输出记录的 UUID。如果指定 –id=@name，则 name 可以在同一条 ovs-vsctl 调用中用于引用此记录。<br>[–id=@name] create table column[:key]=value…<br>• 删除表 table 中记录 record。<br>[–if-exists] destroy table record…<br>• 删除表 table 中所有数据，只用于表 QoS 和表 Queue。<br>–all destroy table<br>• 等待表 table 中记录 record 存在，且列值对符合给定。可不指定或指定多个列值对。可指定超时时间。<br>[–timeout=n] wait-until table record [column[:key]=value]…</p>
+<h3 id="u64CD_u4F5C_ovs__u6570_u636E_u5E93"><a href="#u64CD_u4F5C_ovs__u6570_u636E_u5E93" class="headerlink" title="操作 ovs 数据库"></a>操作 ovs 数据库</h3><p>ovs 数据库目前定义的表：</p>
+<table>
+<thead>
+<tr>
+<th>表名</th>
+<th>含义                                                 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> Open_vSwitch</td>
+<td>ovs-vswitchd 的全局配置。只包含一条记录，记录标识为 ‘.’ </td>
+</tr>
+<tr>
+<td> Bridge</td>
+<td>网桥配置。记录标识为表名                              </td>
+</tr>
+<tr>
+<td> Port</td>
+<td>端口配置。记录标识为端口名                            </td>
+</tr>
+<tr>
+<td> Interface</td>
+<td>网卡配置。记录标识为网卡名                            </td>
+</tr>
+<tr>
+<td> Flow_Table</td>
+<td>流表。记录标识为流表名                               </td>
+</tr>
+<tr>
+<td> QoS</td>
+<td>端口的 Quality-of-service 配置。记录标识为端口名       </td>
+</tr>
+<tr>
+<td> Queue</td>
+<td>QoS 配置中一个队列的配置。记录标识为 UUID              </td>
+</tr>
+<tr>
+<td> Mirror</td>
+<td>端口镜像配置。记录标识为镜像名                        </td>
+</tr>
+<tr>
+<td> Controller</td>
+<td>OpenFlow 控制器配置。记录标识为绑定的网桥名            </td>
+</tr>
+<tr>
+<td> Manager</td>
+<td>OVSDB 连接配置。记录标识为目标                        </td>
+</tr>
+</tbody>
+</table>
+<p>操作 ovs 数据库的子命令：<code>- 列出表 table 中的记录 record</code>。不指定 record，则列出表 table 中的所有记录。</p>
+<p>[–if-exists] [–columns=column[,column]…] list table [record]…</p>
+<p>• 查找表 table 中的其列 column 满足给定值或键值对的记录的相关列值。</p>
+<p>[–columns=column[,column]…] find table [column[:key]=value]…<br>• 获取表 table 的记录 record 中的列 column（中键 key）的值。如果指定 –id=@name，则 name 可以在同一条 ovs-vsctl 调用中用于引用此值。<br>[–if-exists] [–id=@name] get table record [column[:key]]…<br>• 设置表 table 的记录 record 中的列 column<br>[–if-exists] set table record column[:key]=value…<br>• 添加表 table 的记录 record 中的列 column<br>[–if-exists] add table record column [key=]value…<br>• 清除表 table 的记录 record 中的匹配给定值（或键，或键值对）的列 column<br>[–if-exists] remove table record column [key=value | key | value]…<br>• 清除表 table 的记录 record 中的列 column 为空。<br>[–if-exists] clear table record column…<br>• 在表 table 中创建一条新记录，根据指定列值对初始化，没有指定的列赋默认值。输出记录的 UUID。如果指定 –id=@name，则 name 可以在同一条 ovs-vsctl 调用中用于引用此记录。<br>[–id=@name] create table column[:key]=value…<br>• 删除表 table 中记录 record。<br>[–if-exists] destroy table record…<br>• 删除表 table 中所有数据，只用于表 QoS 和表 Queue。<br>–all destroy table<br>• 等待表 table 中记录 record 存在，且列值对符合给定。可不指定或指定多个列值对。可指定超时时间。<br>[–timeout=n] wait-until table record [column[:key]=value]…</p>
 <h2 id="ovs-ofctl"><a href="#ovs-ofctl" class="headerlink" title="ovs-ofctl"></a>ovs-ofctl</h2><p>流语法<br>字段<br>匹配含义<br>in_port=<em>port</em><br>OpenFlow 端口号或端口关键字（例如 LOCAL)<br>dl_vlan=<em>vlan</em><br>IEEE 802.1q VLAN tag。0xffff 表示没打 tag；否则应指定 0 ~ 4095<br>dl_vlan_pcp=<em>priority</em><br>IEEE 802.1q Priority Code Point (PCP) 优先级，0 ~ 7<br>dl_src=xx:xx:xx:xx:xx:xx<br>dl_dst=<em>xx:xx:xx:xx:xx:xx</em><br>以太网源或目的地址</p>
+
+          
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/02/14/hexo-github-dnspod/" itemprop="url">
+                  Hexo+GitHub+DNSPod搭建个人博客
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-02-14T14:46:13+08:00" content="2016-02-14">
+              2016-02-14
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="u4E00_u3001DNS"><a href="#u4E00_u3001DNS" class="headerlink" title="一、DNS"></a>一、DNS</h2><h3 id="NameServer_u8BBE_u5B9A"><a href="#NameServer_u8BBE_u5B9A" class="headerlink" title="NameServer设定"></a>NameServer设定</h3><p>在域名服务商页面把NameServer设为DNSPod的NS：<code>f1g1ns1.dnspod.net</code> 和 <code>f1g1ns2.dnspod.net</code></p>
+<h3 id="DNSPod_u8BBE_u5B9A"><a href="#DNSPod_u8BBE_u5B9A" class="headerlink" title="DNSPod设定"></a>DNSPod设定</h3><h2 id="u4E8C_u3001GitHub"><a href="#u4E8C_u3001GitHub" class="headerlink" title="二、GitHub"></a>二、GitHub</h2><h3 id="u5B89_u88C5GIT"><a href="#u5B89_u88C5GIT" class="headerlink" title="安装GIT"></a>安装GIT</h3><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">brew </span>install git</span><br></pre></td></tr></table></figure>
+<h3 id="u751F_u6210SSH_Key"><a href="#u751F_u6210SSH_Key" class="headerlink" title="生成SSH Key"></a>生成SSH Key</h3><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ssh-keygen</span> -t rsa -C <span class="string">"姓名全拼@haodf.com"</span>  </span><br><span class="line"><span class="variable">$git</span> config --global user.name <span class="string">"姓名全拼"</span>  </span><br><span class="line"><span class="variable">$git</span> config --global user.email <span class="string">"姓名全拼@haodf.com"</span>  </span><br><span class="line"><span class="variable">$cd</span> ~/.ssh/  </span><br><span class="line"><span class="variable">$cat</span> id_rsa.pub 【注：ssh-keygen 命令默认生成 id_rsa.pub】</span><br></pre></td></tr></table></figure>
+<h3 id="u751F_u6210GitHub_Pages"><a href="#u751F_u6210GitHub_Pages" class="headerlink" title="生成GitHub Pages"></a>生成GitHub Pages</h3><h2 id="u4E09_u3001Hexo"><a href="#u4E09_u3001Hexo" class="headerlink" title="三、Hexo"></a>三、Hexo</h2><h3 id="u5B89_u88C5NodeJS"><a href="#u5B89_u88C5NodeJS" class="headerlink" title="安装NodeJS"></a>安装NodeJS</h3><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install <span class="keyword">node</span><span class="identifier"></span><span class="title"></span></span><br></pre></td></tr></table></figure>
+<h3 id="u5B89_u88C5Hexo"><a href="#u5B89_u88C5Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd hexo的安装文件夹</span><br><span class="line">npm <span class="operator"><span class="keyword">install</span> hexo -<span class="keyword">g</span></span><br><span class="line">hexo init</span><br><span class="line">npm <span class="keyword">install</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="Hexo_u8BBE_u5B9A_u3001_u66F4_u65B0"><a href="#Hexo_u8BBE_u5B9A_u3001_u66F4_u65B0" class="headerlink" title="Hexo设定、更新"></a>Hexo设定、更新</h3><p>修改Hexo根目录下的_config.yml文件</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">deploy</span>:</span><br><span class="line">- <span class="attribute">type</span>: git</span><br><span class="line">  <span class="attribute">repo</span>: git<span class="variable">@github</span>.<span class="attribute">com</span>:xxxx/xxxx.github.io.git</span><br><span class="line">  <span class="attribute">branch</span>: master</span><br></pre></td></tr></table></figure>
+<p>安装hexo-deployer-git</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="operator"><span class="keyword">install</span> hexo-deployer-git <span class="comment">--save</span></span></span><br></pre></td></tr></table></figure>
+<p>更新hexo到最新版</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="operator"><span class="keyword">update</span> hexo -<span class="keyword">g</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="Hexo_u547D_u4EE4"><a href="#Hexo_u547D_u4EE4" class="headerlink" title="Hexo命令"></a>Hexo命令</h3><ul>
+<li><p>建立新文章 <code>hexo n &quot;新文章名&quot;</code></p>
+</li>
+<li><p>预览文章 <code>hexo s</code></p>
+</li>
+<li><p>生成网页 <code>hexo g</code></p>
+</li>
+<li><p>发布文章  <code>hexo d</code></p>
+</li>
+<li><p>生成网页并发布文章 <code>hexo d -g</code></p>
+</li>
+</ul>
+<h2 id="u56DB_u3001_u4E3B_u9898"><a href="#u56DB_u3001_u4E3B_u9898" class="headerlink" title="四、主题"></a>四、主题</h2><h2 id="u4E94_u3001Markdown"><a href="#u4E94_u3001Markdown" class="headerlink" title="五、Markdown"></a>五、Markdown</h2><p>Markdown写作APP推荐用Sublime Text 3</p>
+<h3 id="u5B89_u88C5Package_Control"><a href="#u5B89_u88C5Package_Control" class="headerlink" title="安装Package Control"></a>安装Package Control</h3><p>使用快捷键 <code>ctrl + ` </code> 打开Sublime控制台<br>在控制台的命令行输入框中粘贴下面代码后，回车完成Package Control安装</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import urllib.request,os,hashlib; h = <span class="string">'eb2297e1a458f27d836c04bb0cbaf282'</span> + <span class="string">'d0e7a3098092775ccb37ca9d6b2e4b7d'</span>; pf = <span class="string">'Package Control.sublime-package'</span>; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); <span class="keyword">by</span> = urllib.request.urlopen( <span class="string">'http://packagecontrol.io/'</span> + pf.<span class="built_in">replace</span>(<span class="string">' '</span>, <span class="string">'%20'</span>)).<span class="built_in">read</span>(); dh = hashlib.sha256(<span class="keyword">by</span>).hexdigest(); print(<span class="string">'Error validating download (got %s instead of %s), please try manual install'</span> % (dh, h)) <span class="keyword">if</span> dh != h <span class="keyword">else</span> <span class="built_in">open</span>(os.path.join( ipp, pf), <span class="string">'wb'</span> ).<span class="built_in">write</span>(<span class="keyword">by</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="u5B89_u88C5MarkdownEditing_u63D2_u4EF6"><a href="#u5B89_u88C5MarkdownEditing_u63D2_u4EF6" class="headerlink" title="安装MarkdownEditing插件"></a>安装MarkdownEditing插件</h3><p>MarkdownEditing是Markdown写作者必备的插件，它可以不仅可以高亮显示Markdown语法还支持很多编程语言的语法高亮显示。<br>使用快捷键<code>command + shift + p</code>进入到Sublime命令面板，输入“Install Package”。<br>在列表中输入“markdown ed”关键字，选择“MarkdownEditing”回车，重启Sublime Text。</p>
+<p>插入链接 <code>command + option + k</code><br>插入图片 <code>command + shift + k</code> </p>
+<p>MarkdownEditing中的code snippet：<br>输入<code>mdi + tab</code>会自动插入下面的图片标记</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![<span class="link_label">Alt text</span>](<span class="link_url">/path/to/img.jpg "Optional title"</span>)</span><br></pre></td></tr></table></figure>
+<p>输入<code>mdi + tab</code>会自动生成下面的链接标记</p>
+<figure class="highlight clojure"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="collection">[]</span><span class="list">(<span class="keyword">link</span>)</span></span><br></pre></td></tr></table></figure>
+<h3 id="u5B89_u88C5OmmiMarkupPreviewer"><a href="#u5B89_u88C5OmmiMarkupPreviewer" class="headerlink" title="安装OmmiMarkupPreviewer"></a>安装OmmiMarkupPreviewer</h3><p>OmniMarkupPreviewer用来预览markdown编辑的效果，同样支持渲染代码高亮的样式。<br>使用快捷键<code>command + shift + p</code>进入到Sublime命令面板，输入“Install Package”。<br>在列表中输入“omnimarkup”关键字，选择“OmniMarkupPreviewer”回车，重启Sublime Text。</p>
+
+          
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/02/13/install-openvswitch-in-ubuntu-14-04/" itemprop="url">
+                  Ubuntu14.04安装OpenvSwitch
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-02-13T12:49:54+08:00" content="2016-02-13">
+              2016-02-13
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>1、下载安装 Ubuntu14.04 到虚拟机</p>
+<p>2、先更新一下源，顺便装个 vim 和 ssh server<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt-get <span class="operator"><span class="keyword">update</span></span><br><span class="line">apt-<span class="keyword">get</span> -y <span class="keyword">install</span> vim openssh-<span class="keyword">server</span></span></span><br></pre></td></tr></table></figure></p>
+<p>3、安装依赖条件<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get -y <span class="operator"><span class="keyword">install</span> automake autoconf libssl-dev gcc uml-utilities libtool <span class="keyword">build</span>-essential git pkg-config linux-headers-<span class="string">`uname -r`</span></span></span><br></pre></td></tr></table></figure></p>
+<p>4、下载 openvswitch-2.4.0.tar.gz<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget <span class="string">http:</span><span class="comment">//openvswitch.org/releases/openvswitch-2.4.0.tar.gz</span></span><br></pre></td></tr></table></figure></p>
+<p>5、解压到当前目录，然后编译安装<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">tar zxvf openvswitch-<span class="number">2.4</span>.<span class="number">0</span><span class="class">.tar</span><span class="class">.gz</span></span><br><span class="line">cd openvswitch-<span class="number">2.4</span>.<span class="number">0</span></span><br><span class="line">./boot<span class="class">.sh</span></span><br><span class="line">./configure --with-linux=/lib/modules/`uname -r`/build</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure></p>
+<p>6、载入内核模块<br><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"># 查看 openvswitch 依赖的模块</span></span><br><span class="line">modinfo ./datapath/linux/openvswitch.ko</span><br><span class="line"><span class="preprocessor"># 发现 openvswitch.ko 依赖于 libcrc32c 模块，于是先载入 libcrc32c</span></span><br><span class="line">modprobe libcrc32c  </span><br><span class="line"><span class="preprocessor"># 载入 openvswitch 模块</span></span><br><span class="line">insmod ./datapath/linux/openvswitch.ko</span><br><span class="line"><span class="preprocessor"># 查看模块载入情况，可看到 openvswitch 和 libcrc32c</span></span><br><span class="line">lsmod|grep open</span><br></pre></td></tr></table></figure></p>
+<p>7、配置 OVS<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 创建 ovsdb 数据库</span><br><span class="line"><span class="keyword">mkdir</span> -p /usr/<span class="keyword">local</span>/etc/openvswitch</span><br><span class="line">ovsdb-tool create /usr/<span class="keyword">local</span>/etc/openvswitch/<span class="keyword">conf</span>.<span class="keyword">db</span> ./vswitchd/vswitch.ovsschema</span><br><span class="line"># 配置启动 ovsdb 数据库</span><br><span class="line">ovsdb-server --remote=punix:/usr/<span class="keyword">local</span>/<span class="keyword">var</span>/<span class="keyword">run</span>/openvswitch/<span class="keyword">db</span>.sock \</span><br><span class="line">                 --remote=<span class="keyword">db</span>:Open_vSwitch,Open_vSwitch,manager_options \</span><br><span class="line">                 --private-key=<span class="keyword">db</span>:Open_vSwitch,SSL,private_key \</span><br><span class="line">                 --certificate=<span class="keyword">db</span>:Open_vSwitch,SSL,certificate \</span><br><span class="line">                 --<span class="keyword">bootstrap</span>-<span class="keyword">ca</span>-cert=<span class="keyword">db</span>:Open_vSwitch,SSL,ca_cert \</span><br><span class="line">                 --pidfile --detach</span><br><span class="line"># 初始化数据库                 </span><br><span class="line">ovs-vsctl --<span class="keyword">no</span>-wait init</span><br><span class="line"># 开启 openvswitch 守护进程</span><br><span class="line">ovs-vswitchd --pidfile --detach</span><br></pre></td></tr></table></figure></p>
+<p>8、看到类似以下几行消息，表明 openvswitch 配置完毕<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2015</span>-<span class="number">11</span>-<span class="number">27</span>T07:<span class="number">41</span>:<span class="number">59</span>Z|<span class="number">00001</span>|ovs_numa|INFO|Discovered <span class="number">0</span> NUMA nodes and <span class="number">0</span> CPU cores </span><br><span class="line"><span class="number">2015</span>-<span class="number">11</span>-<span class="number">27</span>T07:<span class="number">41</span>:<span class="number">59</span>Z|<span class="number">00002</span>|reconnect|INFO|unix:/usr/local/var/run/openvswitch/db.sock: connecting... </span><br><span class="line"><span class="number">2015</span>-<span class="number">11</span>-<span class="number">27</span>T07:<span class="number">41</span>:<span class="number">59</span>Z|<span class="number">00003</span>|reconnect|INFO|unix:/usr/local/var/run/openvswitch/db.sock: connected</span><br></pre></td></tr></table></figure></p>
+<p>9、根据下载的 openvswitch 版本的不同，配置命令略有差异，附上 <a href="https://github.com/openvswitch/ovs/blob/master/INSTALL.md" target="_blank" rel="external">官网配置地址</a></p>
+<blockquote>
+<p>注：以上操作是在root账户下进行，普通账户请注意切换权限</p>
+</blockquote>
+<p><a href="http://ridewindx.github.io/ovs_utilities.html" target="_blank" rel="external">配置命令介绍</a></p>
+
+          
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/02/11/hello-world/" itemprop="url">
+                  Hello World
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-02-11T16:18:59+08:00" content="2016-02-11">
+              2016-02-11
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<h2 id="Quick_Start"><a href="#Quick_Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create_a_new_post"><a href="#Create_a_new_post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run_server"><a href="#Run_server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate_static_files"><a href="#Generate_static_files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy_to_remote_sites"><a href="#Deploy_to_remote_sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
 
           
         
