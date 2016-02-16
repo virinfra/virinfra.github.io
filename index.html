@@ -351,11 +351,79 @@
 </tr>
 </tbody>
 </table>
-<p>操作 ovs 数据库的子命令：<code>- 列出表 table 中的记录 record</code>。不指定 record，则列出表 table 中的所有记录。</p>
-<p>[–if-exists] [–columns=column[,column]…] list table [record]…</p>
-<p>• 查找表 table 中的其列 column 满足给定值或键值对的记录的相关列值。</p>
-<p>[–columns=column[,column]…] find table [column[:key]=value]…<br>• 获取表 table 的记录 record 中的列 column（中键 key）的值。如果指定 –id=@name，则 name 可以在同一条 ovs-vsctl 调用中用于引用此值。<br>[–if-exists] [–id=@name] get table record [column[:key]]…<br>• 设置表 table 的记录 record 中的列 column<br>[–if-exists] set table record column[:key]=value…<br>• 添加表 table 的记录 record 中的列 column<br>[–if-exists] add table record column [key=]value…<br>• 清除表 table 的记录 record 中的匹配给定值（或键，或键值对）的列 column<br>[–if-exists] remove table record column [key=value | key | value]…<br>• 清除表 table 的记录 record 中的列 column 为空。<br>[–if-exists] clear table record column…<br>• 在表 table 中创建一条新记录，根据指定列值对初始化，没有指定的列赋默认值。输出记录的 UUID。如果指定 –id=@name，则 name 可以在同一条 ovs-vsctl 调用中用于引用此记录。<br>[–id=@name] create table column[:key]=value…<br>• 删除表 table 中记录 record。<br>[–if-exists] destroy table record…<br>• 删除表 table 中所有数据，只用于表 QoS 和表 Queue。<br>–all destroy table<br>• 等待表 table 中记录 record 存在，且列值对符合给定。可不指定或指定多个列值对。可指定超时时间。<br>[–timeout=n] wait-until table record [column[:key]=value]…</p>
-<h2 id="ovs-ofctl"><a href="#ovs-ofctl" class="headerlink" title="ovs-ofctl"></a>ovs-ofctl</h2><p>流语法<br>字段<br>匹配含义<br>in_port=<em>port</em><br>OpenFlow 端口号或端口关键字（例如 LOCAL)<br>dl_vlan=<em>vlan</em><br>IEEE 802.1q VLAN tag。0xffff 表示没打 tag；否则应指定 0 ~ 4095<br>dl_vlan_pcp=<em>priority</em><br>IEEE 802.1q Priority Code Point (PCP) 优先级，0 ~ 7<br>dl_src=xx:xx:xx:xx:xx:xx<br>dl_dst=<em>xx:xx:xx:xx:xx:xx</em><br>以太网源或目的地址</p>
+<p>操作 ovs 数据库的子命令：- 列出表 table 中的记录 record。不指定 record，则列出表 table 中的所有记录。</p>
+<p><code>[--if-exists] [--columns=column[,column]...] list table [record]...</code></p>
+<ul>
+<li>查找表 table 中的其列 column 满足给定值或键值对的记录的相关列值。</li>
+</ul>
+<p><code>[--columns=column[,column]...] find table [column[:key]=value]...</code></p>
+<ul>
+<li>获取表 table 的记录 record 中的列 column（中键 key）的值。如果指定 –id=@name，则 name 可以在同一条 ovs-vsctl 调用中用于引用此值。</li>
+</ul>
+<p><code>[--if-exists] [--id=@name] get table record [column[:key]]...</code></p>
+<ul>
+<li>设置表 table 的记录 record 中的列 column</li>
+</ul>
+<p><code>[--if-exists] set table record column[:key]=value...</code></p>
+<ul>
+<li>添加表 table 的记录 record 中的列 column</li>
+</ul>
+<p><code>[--if-exists] add table record column [key=]value...</code></p>
+<ul>
+<li>清除表 table 的记录 record 中的匹配给定值（或键，或键值对）的列 column</li>
+</ul>
+<p><code>[--if-exists] remove table record column [key=value | key | value]...</code></p>
+<ul>
+<li>清除表 table 的记录 record 中的列 column 为空。</li>
+</ul>
+<p><code>[--if-exists] clear table record column...</code></p>
+<ul>
+<li>在表 table 中创建一条新记录，根据指定列值对初始化，没有指定的列赋默认值。输出记录的 UUID。如果指定 –id=@name，则 name 可以在同一条 ovs-vsctl 调用中用于引用此记录。</li>
+</ul>
+<p><code>[--id=@name] create table column[:key]=value...</code></p>
+<ul>
+<li>删除表 table 中记录 record。</li>
+</ul>
+<p><code>[--if-exists] destroy table record...</code></p>
+<ul>
+<li>删除表 table 中所有数据，只用于表 QoS 和表 Queue。</li>
+</ul>
+<p><code>--all destroy table</code></p>
+<ul>
+<li>等待表 table 中记录 record 存在，且列值对符合给定。可不指定或指定多个列值对。可指定超时时间。</li>
+</ul>
+<p><code>[--timeout=n] wait-until table record [column[:key]=value]...</code></p>
+<h2 id="ovs-ofctl"><a href="#ovs-ofctl" class="headerlink" title="ovs-ofctl"></a>ovs-ofctl</h2><p>###流语法</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>匹配含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>in_port=<em>port</em></td>
+<td>OpenFlow 端口号或端口关键字（例如 LOCAL)</td>
+</tr>
+<tr>
+<td>dl_vlan=<em>vlan</em></td>
+<td>IEEE 802.1q VLAN tag。0xffff 表示没打 tag；否则应指定 0 ~ 4095</td>
+</tr>
+<tr>
+<td>dl_vlan_pcp=<em>priority</em></td>
+<td>IEEE 802.1q Priority Code Point (PCP) 优先级，0 ~ 7</td>
+</tr>
+<tr>
+<td>dl_src=xx:xx:xx:xx:xx:xx</td>
+<td>以太网源地址</td>
+</tr>
+<tr>
+<td>dl_dst=<em>xx:xx:xx:xx:xx:xx</em></td>
+<td>以太网目的地址</td>
+</tr>
+</tbody>
+</table>
 
           
         
